@@ -1,0 +1,24 @@
+//string concatination
+
+#include<stdio.h>
+char str(char *s1,char *s2);
+int main()
+{
+    char s1[20]="surya";
+    char s2[20]="sha";
+     char s=str(s1,s2);
+     
+    // printf("%s",s);
+}
+char str(char *s1,char *s2)
+{
+    int i,j;
+    
+    for(i=0;s1[i];i++);
+    
+    for(j=0;s2[j];j++)
+    s1[i++]=s2[j];
+    
+    printf("%s",s1);
+    
+}
