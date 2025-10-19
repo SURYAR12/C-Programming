@@ -17,6 +17,7 @@ void rev_data(struct st *);
 int count(struct st *);
 void removeAll_node(struct st **);
 void delete_node(struct st **,int);
+void sort (struct st *ptr);
 int main()
 {
 	struct st *hptr=0;	
@@ -42,7 +43,7 @@ int main()
 	{
 
 	printf("which operation want you ?\n");
-	printf("optional like <-----> a/d/s/e/l/r \n");
+	printf("optional like <-----> a/d/s/e/l/r/t \n");
 
 	scanf(" %c",&op);
 		switch(op)
@@ -68,7 +69,7 @@ int main()
 			case's':
 				printf("all Student Records\n");
 				print(hptr);
-				printf("clear The all Data\n");
+			//	printf("clear The all Data\n");
 				break;
 
 				/*   case'm':
@@ -86,6 +87,10 @@ int main()
 				rev_data(hptr);
 				print(hptr);
 				break;
+			case't':	
+				sort(hptr);
+				print(hptr);
+				break;	
 			case'e':
 				return 0; 		
 
@@ -208,8 +213,30 @@ void delete_node(struct st **ptr,int n)
 	} 
 	printf("no node are mathching\n");
 }
+
 void sort(struct st *ptr)
 {
-      	
-	
+    int c = count(ptr);
+    int size = sizeof(struct st);
+    struct st **p = (struct st **)malloc(c * sizeof(struct st *));
+    int i, j;
+
+    // Store node addresses
+    for (i = 0; i < c; i++)
+    {
+        p[i] = ptr;
+        ptr = ptr->next;
+    }
+
+    struct st temp;
+
+        for (i = 0; i < c - 1; i++)
+    {
+        if (p[i]->roll > p[i + 1]->roll)
+        {
+            memcpy(&temp, p[i], size);
+            memcpy(p[i], p[i + 1], size);
+            memcpy(p[i + 1], &temp, size);
+        }
+    }
 }
