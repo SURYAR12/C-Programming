@@ -18,6 +18,7 @@ int count(struct st *);
 void removeAll_node(struct st **);
 void delete_node(struct st **,int);
 void sort (struct st *ptr);
+void file(struct st *ptr);
 int main()
 {
 	struct st *hptr=0;	
@@ -31,19 +32,19 @@ int main()
 		printf("| D/d	: Delete A Record       |\n");
 		printf("| S/s	: Show the List         |\n");
 		printf("| M/m	: Modify A record       |\n");
-		printf("| V/v	: Save                  |\n");
+		printf("| f/f	: Save FILE             |\n");
 		printf("| E/e	: Exit                  |\n");
 		printf("| T/t	: Sort the List         |\n");
 		printf("| L/l	: Delete All the Records|\n");
 		printf("| R/r	: Reverse the List	|\n");
 		printf("+--------+----------------------+\n");
 	}
-	char op;
+	char op,u;
 	while(1)
 	{
 
 	printf("which operation want you ?\n");
-	printf("optional like <-----> a/d/s/e/l/r/t \n");
+	printf("optional like <-----> a/d/s/e/l/r/t/f \n");
 
 	scanf(" %c",&op);
 		switch(op)
@@ -54,50 +55,74 @@ int main()
 					printf("do you want one more data --> if you want write 'y'\n");
 					scanf(" %c",&ch);
 				}while((ch=='y')||(ch=='Y'));
-				//printf("all Student Records\n");
-                               // print(hptr);
+			
 				break;
 
 			case'd':
-				printf("Enter the particular record num --> \n");
-                                scanf("%d",&d); 
+					printf("+--------+----------------------+\n");
+					printf("| Enter :                       |\n");
+		            printf("| d	: Delete A Record           |\n");
+        	        printf("+--------+----------------------+\n");
+	            scanf(" %c",&u);
+			    if(u=='t')
+			    {
+                scanf("%d",&d); 
 				delete_node(&hptr,d);
 				printf("After free the space\n");
 				print(hptr);
 				break;
+			    }
 
 			case's':
-				printf("all Student Records\n");
+			    	printf("+--------+----------------------+\n");
+					printf("| Enter :                       |\n");
+		            printf("| S/s	: Show All List         |\n");
+        	        printf("+--------+----------------------+\n");
+	             scanf(" %c",&u);
+			    if(u=='s')
 				print(hptr);
-			//	printf("clear The all Data\n");
-				break;
-
-				/*   case'm':
-				     case'v':
-				     case'e':
-				     case't':*/
-
+			    break;
+			
 			case'l':
-
-				removeAll_node(&hptr);
+				    printf("+--------+----------------------+\n");
+					printf("| Enter :                       |\n");
+		            printf("| D	: Delete All List       |\n");
+        	        printf("+--------+----------------------+\n");
+              	scanf(" %c",&u);
+			    if(u=='d')
+			    {
+              	removeAll_node(&hptr);
 				print(hptr);
 				break;
+			    }
 
 			case'r':	
 				rev_data(hptr);
 				print(hptr);
 				break;
-			case't':	
-				sort(hptr);
+			case't':
+			    	printf("+--------+----------------------+\n");
+					printf("| Enter :                       |\n");
+		            printf("|T/t	: Sort with percentage  |\n");
+        	        printf("+--------+----------------------+\n");
+			    scanf(" %c",&u);
+			    if(u=='t')
+			    {
+			    sort(hptr);
 				print(hptr);
-				break;	
+				break;
+			    }
+			case'f':	
+				file(hptr);
+				break;
+				
 			case'e':
 				return 0; 		
 
 		//	default:printf("In valid characters\n");
 
-		}   
-	}}
+}		}   
+	}
 void add_end(struct st **ptr)
 {
 	struct st *temp=(struct st*)malloc(sizeof(struct st));
@@ -189,11 +214,11 @@ void delete_node(struct st **ptr,int n)
 	struct st *temp=*ptr;
 	struct st *prev;
 
-        printf("Delete particular Record\n");
+  
 	while(temp!=0)
 	{
 
-		if(temp->mark==n)
+		if(temp->roll==n)
 		{
 			if(temp==*ptr)
 				*ptr=temp->next;
@@ -203,6 +228,7 @@ void delete_node(struct st **ptr,int n)
 
 			free(temp);
 			return;
+			printf("Deleted successfully\n");
 		}
 
 		else
@@ -211,7 +237,6 @@ void delete_node(struct st **ptr,int n)
 			temp=temp->next;      
 		}	   
 	} 
-	printf("no node are mathching\n");
 }
 
 void sort(struct st *ptr)
@@ -239,4 +264,15 @@ void sort(struct st *ptr)
             memcpy(p[i + 1], &temp, size);
         }
     }
+}
+void file(struct st *ptr)
+{
+	FILE *fp=fopen("student record","w");
+
+	while(ptr!=0)
+	{
+	fprintf(fp,"%d %s %f\n",ptr->roll,ptr->name,ptr->mark);
+		ptr=ptr->next;
+	}
+
 }
